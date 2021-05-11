@@ -10,7 +10,8 @@ import com.omkarcodes.jokes.models.JokeResponse
 import kotlinx.android.synthetic.main.item_joke.view.*
 
 class JokeAdapter(
-    private val list: List<JokeResponse>
+    private val list: List<JokeResponse>,
+    val listener: OnClickListener
 ) : RecyclerView.Adapter<JokeAdapter.ViewHolder>() {
 
     inner class ViewHolder(item: View) : RecyclerView.ViewHolder(item)
@@ -23,10 +24,17 @@ class JokeAdapter(
         val joke = list[position]
         holder.itemView.apply {
             tvJoke.text = joke.joke
+            setOnClickListener {
+                listener.onClick(joke = joke.joke)
+            }
         }
     }
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    interface OnClickListener{
+        fun onClick(joke: String)
     }
 }
